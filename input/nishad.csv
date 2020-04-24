@@ -1,0 +1,14 @@
+Type,ID,Property,Label,Mandatory,Repeatable,ValueType,Value,Annotation
+BASE,.,http://dcap.example/ap/example-01/,,,,,,
+prefix,dct,http://purl.org/dc/terms/,,,,,,
+prefix,foaf,http://xmlns.com/foaf/spec/,,,,,,
+prefix,xsd,http://www.w3.org/2001/XMLSchema#,,,,,,
+prefix,sco,http://schema.org/,,,,,,
+entity,book,sco:Book,Book,,,,,
+statement,creator,dct:creator,Author,y,y,nonliteral,@person,Author is not required; no limit on the number
+,title,dct:title,Title,y,n,literal,xsd:string,Each book must have a title
+,pubDate,dct:date,Year of publication,y,n,literal,xsd:year,"Only the year, 9999"
+entity,person,sco:Person,Person,,,,,
+statement,name,foaf:Name,Name,y,n,literal,,Each person has one name
+,email,foaf:mbox,Email,n,y,IRI,,Email is optional but only one allowed
+,birthDate,dct:date,Birth year,n,y,literal,xsd:year,"Only the year, 9999"
