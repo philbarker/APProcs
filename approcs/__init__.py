@@ -1,10 +1,20 @@
-import csv
+import csv, yaml
 
-class APProcs(list):
-    """ The application profile as a list of dicts, one for each statement, and methods and methods to read, display and process that AP.
+class APProcs(dict):
+    """ The a dict of the application profile, each value is a list of dicts, a list for each type containing dicts for each row of that type. Methods to read, display and process that AP.
+    Keys of top level dict are hard coded:
+        base       - a list of the AP base dict
+        namespaces - a list of the namespace dicts
+        entities   - a list of the entity dicts
+        statements - a list of the statement dicts
     """
 
     def __init__(self, infile):
+        """set the class properties to their types and optionally, if a csv  file is specified, read the data in"""
+        self['base'] = list()
+        self['namespaces'] = list()
+        self['entities'] = list()
+        self['statements'] =list()
         if (infile):
             self.read_input(infile)
         else:
@@ -17,22 +27,48 @@ class APProcs(list):
             apreader = csv.DictReader(csvfile)
             last_entity = ''
             last_type=''
+            success = True
             for row in apreader:
                 if (row['Type']):
                     last_type = row['Type']
                 else:
                     row['Type'] = last_type
-                if ('entity' == row['Type'].lower()):
+                if ('base' == row['Type'].lower()):
+                    self['base'].append(row)
+                elif ('prefix' == row['Type'].lower()):
+                    self['namespaces'].append(row)
+                elif ('entity' == row['Type'].lower()):
                     last_entity = row['ID']
-                else:
+                    self['entities'].append(row)
+                elif ('statement' == row['Type'].lower()):
                     row['on entity'] = last_entity
-                self.append(row)
-        return
+                    self['statements'].append(row)
+                else:
+                    print("Warning could not proces row type "+row['Type'])
+                    success = False
+        return success
 
-    def dump(self):
-        """print key: value pairs for all dicts"""
-        for row in self :
-            for key in row.keys():
-                print(key+', '+row[key])
-            print('-----')
-        return
+    def dump(self, t=''):
+        """print key: value pairs for all dicts of type t; if t is empty print all"""
+        if ('' == t):
+            types = self.keys()
+        elif (type(t) is str):
+            types = [t]
+        elif (type(t) is list):
+            types = t
+        else:
+            print('types to print must be list or string'+t)
+            return False
+        for atype in types :
+            if atype in self.keys():
+                print('\n\n=== '+atype+' ===')
+                for r in self[atype]:
+                    for key in r.keys():
+                        print(key+', '+r[key])
+                    print('-----')
+            else:
+                print('cannot print info for unknown type '+atype)
+        return True
+
+    def dump_yaml(self):
+        print(yaml.dump(self))

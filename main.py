@@ -12,4 +12,5 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
     processor = APProcs(args.infile)
-    processor.dump()
+    processor.dump(['entities', 'statements'])
+#    processor.dump_yaml()
