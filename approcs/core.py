@@ -91,11 +91,11 @@ class APProcs(dict):
             yama["description_set"]["entities"].append(e["ID"])
             d = dict()
             d["maps_to"] = e["Property"]
-            if ("y" == e["Mandatory"]):
+            if "y" == e["Mandatory"]:
                 d["min"] = 1
             else:
                 d["min"] = 0
-            if ("y" == e["Repeatable"]):
+            if "y" == e["Repeatable"]:
                 d["max"] = "unlimited"
             else:
                 d["max"] = 1
@@ -113,11 +113,11 @@ class APProcs(dict):
             d["property"] = s["Property"]
             d["type"] = s["ValueType"]
             d["value"] = s["Value"]
-            if ("y" == s["Mandatory"]):
+            if "y" == s["Mandatory"]:
                 d["min"] = 1
             else:
                 d["min"] = 0
-            if ("y" == s["Repeatable"]):
+            if "y" == s["Repeatable"]:
                 d["max"] = "unlimited"
             else:
                 d["max"] = 1
