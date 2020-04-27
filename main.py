@@ -23,3 +23,4 @@ if __name__ == "__main__":
     ap.dump(["entities", "statements"])
     yama = APProcs.build_yama(ap)
     print(APProcs.yaml.dump(yama, default_flow_style=False))
+    base = APProcs.make_base_graph()
