@@ -1,5 +1,5 @@
 from approcs import APProcs
-import argparse, yaml
+import argparse
 
 
 def get_args():
@@ -19,7 +19,7 @@ def get_args():
 
 if __name__ == "__main__":
     args = get_args()
-    processor = APProcs(args.infile)
-    processor.dump(["entities", "statements"])
-    yama = processor.build_yama()
-    print(yaml.dump(yama, default_flow_style=False))
+    ap = APProcs(args.infile)
+    ap.dump(["entities", "statements"])
+    yama = APProcs.build_yama(ap)
+    print(APProcs.yaml.dump(yama, default_flow_style=False))
