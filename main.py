@@ -12,7 +12,7 @@ def get_args():
         "--infile",
         type=str,
         default="input/nishad.csv",
-        help="input file name of Applicaiton Profile csv",
+        help="input file name of Application Profile csv",
     )
     return parser.parse_args()
 
