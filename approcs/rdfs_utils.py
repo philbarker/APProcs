@@ -3,7 +3,7 @@ from glob import glob
 
 schema_location = "./schemas/"
 
-def make_base_graph():
+def make_base_graph(self):
     """read a load of .ttl RDFS files and merge into a graph"""
     # a more refined version would work out which files are necessary, but thistle do for now
     g = Graph()
