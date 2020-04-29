@@ -1,5 +1,6 @@
 import yaml
 
+
 def build_yama(self):
     """build a YAMA representation of the AP"""
     # idea is just to test that internal representation of AP is useful for something, otherwise could just store csv lines as found

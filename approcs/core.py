@@ -9,10 +9,10 @@ class APProcs(dict):
         entities   - a list of the entity dicts
         statements - a list of the statement dicts
     """
+
     import yaml
     from .yama_utils import build_yama
-    from .rdfs_utils import make_base_graph
-
+    from .rdfs_utils import make_base_graph, make_ap_graph
 
     def __init__(self, infile):
         """set the class properties to their types and optionally, if a csv  file is specified, read the data in"""
