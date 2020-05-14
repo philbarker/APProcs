@@ -1,0 +1,17 @@
+sdo:,http://schema.org/,schema.org,,
+foaf:,http://xmlns.com/foaf/0.1/,FOAF,,
+dct:,http://purl.org/dc/terms/,DC Terms,,
+,,,,
+@book,sdo:Book,Book,,
+,sdo:name,title,Literal,
+,sdo:creator,written by,URI,@author
+,dct:rightsHolder,owner,URI,@owner
+,,,,
+@author,sdo:Person,Author,,
+,sdo:givenName,given name,Literal,
+,sdo:familyName,family name,Literal,
+,,,,
+@owner,"foaf:Person, sdo:Person",Owner,,
+,sdo:givenName,given name,Literal,
+,sdo:familyName,family name,Literal,
+,foaf:knows,friend of,URI,@owner
