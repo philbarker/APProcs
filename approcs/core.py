@@ -4,7 +4,6 @@ import csv
 class APProcs(dict):
     """ The a dict of the application profile, each value is a list of dicts, a list for each type containing dicts for each row of that type. Methods to read, display and process that AP.
     Keys of top level dict are hard coded:
-        base       - a list of the AP base dict
         namespaces - a list of the namespace dicts
         entities   - a list of the entity dicts
         statements - a list of the statement dicts
@@ -16,7 +15,6 @@ class APProcs(dict):
 
     def __init__(self, infile):
         """set the class properties to their types and optionally, if a csv  file is specified, read the data in"""
-        self["base"] = list()
         self["namespaces"] = list()
         self["entities"] = list()
         self["statements"] = list()
@@ -38,8 +36,6 @@ class APProcs(dict):
                     last_type = row["Type"]
                 else:
                     row["Type"] = last_type
-                if "base" == row["Type"].lower():
-                    self["base"].append(row)
                 elif "prefix" == row["Type"].lower():
                     self["namespaces"].append(row)
                 elif "entity" == row["Type"].lower():
