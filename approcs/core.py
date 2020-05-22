@@ -10,8 +10,7 @@ class APProcs(dict):
     values within each dict are themselves dicts of column_heading: cell value pairs from the rows in the csv.
     """
 
-    import yaml
-    from .yama_utils import build_yama
+    from .yama_utils import build_yama, dump_yama
     from .rdfs_utils import make_base_graph, make_ap_graph
 
     def __init__(self, infile):
@@ -24,9 +23,10 @@ class APProcs(dict):
         else:
             print("no input file specified")
         return
+
     def isEmpty(self, dictionary):
         for key in dictionary:
-            if (dictionary[key]):
+            if dictionary[key]:
                 return False
         return True
 
@@ -39,18 +39,18 @@ class APProcs(dict):
             for row in apreader:
                 c += 1
                 if self.isEmpty(row):
-                    #ignore empty rows; next please
+                    # ignore empty rows; next please
                     continue
-                if (row["ID"] and row["ID"][-1] == ":"):
-                    #it's a namespace id
+                if row["ID"] and row["ID"][-1] == ":":
+                    # it's a namespace id
                     self["namespaces"][row["ID"][:-1]] = row
-                elif (row["ID"] and row["ID"][0] == "@"):
-                    #it's a shape id
+                elif row["ID"] and row["ID"][0] == "@":
+                    # it's a shape id
                     current_shape = row["ID"]
                     self["shapes_meta"][current_shape] = row
                     self["shape_props"][current_shape] = list()
-                else: # statement constrains a property
-                    row['ID'] = str(c)
+                else:  # statement constrains a property
+                    row["ID"] = str(c)
                     self["shape_props"][current_shape].append(row)
         return
 

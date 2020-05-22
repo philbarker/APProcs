@@ -1,6 +1,3 @@
-import yaml
-
-
 def build_yama(self):
     """build a YAMA representation of the AP"""
     # idea is just to test that internal representation of AP is useful for something, otherwise could just store csv lines as found
@@ -8,51 +5,60 @@ def build_yama(self):
     yama = dict()
     yama["YAMA"] = "1.0"
     yama["description_set"] = dict()
-    yama["description_set"]["ID"] = ap["base"][0]["ID"]
-    yama["description_set"]["title"] = ap["base"][0]["Label"]
+    yama["description_set"]["ID"] = "can't generate"
+    yama["description_set"]["title"] = "can't generate"
     yama["description_set"]["entities"] = list()
     yama["namespaces"] = dict()
-    for i in range(0, len(ap["namespaces"])):
-        k = ap["namespaces"][i]["ID"]
-        v = ap["namespaces"][i]["Property"]
-        yama["namespaces"][k] = v
+    for ns in ap["namespaces"].keys():
+        yama["namespaces"][ns] = ap["namespaces"][ns]["URI"]
     yama["descriptions"] = dict()
-    for i in range(0, len(ap["entities"])):
-        e = ap["entities"][i]
-        yama["description_set"]["entities"].append(e["ID"])
+    for s in ap["shapes_meta"].keys():
+        meta = ap["shapes_meta"][s]
+        yama["description_set"]["entities"].append(s)
         d = dict()
-        d["maps_to"] = e["Property"]
-        if "y" == e["Mandatory"]:
+        d["maps_to"] = find_type_mapping(ap["shape_props"][s])
+        if "y" == meta["Mandatory"]:
             d["min"] = 1
         else:
             d["min"] = 0
-        if "y" == e["Repeatable"]:
+        if "y" == meta["Repeatable"]:
             d["max"] = "unlimited"
         else:
             d["max"] = 1
         d["standalone"] = str()
         d["statements"] = list()
-        d["label"] = e["Label"]
-        d["annotation"] = e["Annotation"]
-        yama["descriptions"][e["ID"]] = d
+        d["label"] = meta["Label"]
+        d["annotation"] = meta["Comment"]
+        yama["descriptions"][meta["ID"]] = d
     yama["statements"] = dict()
-    for i in range(0, len(ap["statements"])):
-        s = ap["statements"][i]
-        on_e = s["on entity"]
-        yama["descriptions"][on_e]["statements"].append(s["ID"])
-        d = dict()
-        d["property"] = s["Property"]
-        d["type"] = s["ValueType"]
-        d["value"] = s["Value"]
-        if "y" == s["Mandatory"]:
-            d["min"] = 1
-        else:
-            d["min"] = 0
-        if "y" == s["Repeatable"]:
-            d["max"] = "unlimited"
-        else:
-            d["max"] = 1
-        d["label"] = s["Label"]
-        d["annotation"] = s["Annotation"]
-        yama["statements"][s["ID"]] = d
+    for e in ap["shape_props"].keys():
+        for s in ap["shape_props"][e]:
+            yama["descriptions"][e]["statements"].append(s["ID"])
+            d = dict()
+            d["property"] = s["URI"]
+            d["type"] = s["Type"]
+            d["value"] = s["Value Space"]
+            if "y" == s["Mandatory"]:
+                d["min"] = 1
+            else:
+                d["min"] = 0
+            if "y" == s["Repeatable"]:
+                d["max"] = "unlimited"
+            else:
+                d["max"] = 1
+            d["label"] = s["Label"]
+            d["annotation"] = s["Comment"]
+            yama["statements"][s["ID"]] = d
     return yama
+
+
+def find_type_mapping(s):
+    """given a shape s, as a dict, returns URIs specified as required values for rdf:type property"""
+    return "not yet done"
+
+
+from yaml import dump
+
+
+def dump_yama(self, yama):
+    print(dump(yama, default_flow_style=False))

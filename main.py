@@ -20,9 +20,9 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
     ap = APProcs(args.infile)
-    ap.dump()
-#    yama = ap.build_yama()
-    #    print(ap.yaml.dump(yama, default_flow_style=False))
+#    ap.dump()
+    yama = ap.build_yama()
+    ap.dump_yama(yama)
 #    base = ap.make_base_graph()
 #    ap_graph = ap.make_ap_graph(base)
 #    print(ap_graph.serialize(format="turtle").decode("utf-8"))
