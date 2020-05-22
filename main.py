@@ -11,7 +11,7 @@ def get_args():
         "-if",
         "--infile",
         type=str,
-        default="input/nishad.csv",
+        default="input/ap_bookclub.csv",
         help="input file name of Application Profile csv",
     )
     return parser.parse_args()
@@ -20,9 +20,9 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
     ap = APProcs(args.infile)
-    ap.dump(["statements"])
-    yama = ap.build_yama()
+    ap.dump()
+#    yama = ap.build_yama()
     #    print(ap.yaml.dump(yama, default_flow_style=False))
-    base = ap.make_base_graph()
-    ap_graph = ap.make_ap_graph(base)
+#    base = ap.make_base_graph()
+#    ap_graph = ap.make_ap_graph(base)
 #    print(ap_graph.serialize(format="turtle").decode("utf-8"))

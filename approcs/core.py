@@ -1,12 +1,13 @@
-import csv
+import csv, pprint
 
 
 class APProcs(dict):
     """ The a dict of the application profile, each value is a list of dicts, a list for each type containing dicts for each row of that type. Methods to read, display and process that AP.
     Keys of top level dict are hard coded:
-        namespaces - a list of the namespace dicts
-        entities   - a list of the entity dicts
-        statements - a list of the statement dicts
+        namespaces  - a dict of the namespace
+        shapes_meta - a dict of statements about shapes
+        shape_props - a dict of lists of property statements for each shape
+    values within each dict are themselves dicts of column_heading: cell value pairs from the rows in the csv.
     """
 
     import yaml
@@ -15,42 +16,47 @@ class APProcs(dict):
 
     def __init__(self, infile):
         """set the class properties to their types and optionally, if a csv  file is specified, read the data in"""
-        self["namespaces"] = list()
-        self["entities"] = list()
-        self["statements"] = list()
+        self["namespaces"] = dict()
+        self["shapes_meta"] = dict()
+        self["shape_props"] = dict()
         if infile:
             self.read_input(infile)
         else:
             print("no input file specified")
         return
+    def isEmpty(self, dictionary):
+        for key in dictionary:
+            if (dictionary[key]):
+                return False
+        return True
 
     def read_input(self, infile):
         """read a csv into list of dicts, one for each row in csv except for first row which is used as keys."""
         with open(infile) as csvfile:
             apreader = csv.DictReader(csvfile)
-            last_entity = ""
-            last_type = ""
-            success = True
+            current_shape = "None"
+            c = int(0)
             for row in apreader:
-                if row["Type"]:
-                    last_type = row["Type"]
-                else:
-                    row["Type"] = last_type
-                elif "prefix" == row["Type"].lower():
-                    self["namespaces"].append(row)
-                elif "entity" == row["Type"].lower():
-                    last_entity = row["ID"]
-                    self["entities"].append(row)
-                elif "statement" == row["Type"].lower():
-                    row["on entity"] = last_entity
-                    self["statements"].append(row)
-                else:
-                    print("Warning could not proces row type " + row["Type"])
-                    success = False
-        return success
+                c += 1
+                if self.isEmpty(row):
+                    #ignore empty rows; next please
+                    continue
+                if (row["ID"] and row["ID"][-1] == ":"):
+                    #it's a namespace id
+                    self["namespaces"][row["ID"][:-1]] = row
+                elif (row["ID"] and row["ID"][0] == "@"):
+                    #it's a shape id
+                    current_shape = row["ID"]
+                    self["shapes_meta"][current_shape] = row
+                    self["shape_props"][current_shape] = list()
+                else: # statement constrains a property
+                    row['ID'] = str(c)
+                    self["shape_props"][current_shape].append(row)
+        return
 
     def dump(self, t=""):
-        """print key: value pairs for all dicts of type t; if t is empty print all"""
+        """print key: value pairs for all dicts of type(s) t; if t is empty print all"""
+        pp = pprint.PrettyPrinter(indent=4)
         if "" == t:
             types = self.keys()
         elif type(t) is str:
@@ -63,10 +69,7 @@ class APProcs(dict):
         for atype in types:
             if atype in self.keys():
                 print("\n\n=== " + atype + " ===")
-                for r in self[atype]:
-                    for key in r.keys():
-                        print(key + ", " + r[key])
-                    print("-----")
+                pp.pprint(self[atype])
             else:
                 print("cannot print info for unknown type " + atype)
         return True
