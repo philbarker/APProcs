@@ -35,16 +35,19 @@ class APProcs(dict):
         """read a csv into list of dicts, one for each row in csv except for first row which is used as keys."""
         with open(infile) as csvfile:
             apreader = csv.DictReader(csvfile)
-            current_shape = "None"
+            current_shape = "All"
+            self["shapes_meta"]["All"] = dict()
+            self["shape_props"]["All"] = list()
             c = int(0)
             for row in apreader:
                 c += 1
+#                print('reading line', c)
                 if self.isEmptyRow(row):
                     # ignore empty rows; next please
                     continue
                 if row["ID"] and row["ID"][-1] == ":":
                     # it's a namespace id
-                    self["namespaces"][row["ID"][:-1]] = row
+                    self["namespaces"][row["ID"]] = row
                 elif row["ID"] and row["ID"][0] == "@":
                     # it's a shape id
                     current_shape = row["ID"]
@@ -53,6 +56,7 @@ class APProcs(dict):
                 else:  # statement constrains a property
                     row["ID"] = str(c)
                     self["shape_props"][current_shape].append(row)
+
         return
 
     def dump(self, t=""):

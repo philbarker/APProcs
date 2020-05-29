@@ -15,7 +15,8 @@ def build_yama(self):
     for ns in ap["namespaces"].keys():
         yama["namespaces"][ns] = ap["namespaces"][ns]["URI"]
     yama["descriptions"] = dict()
-    for s in ap["shapes_meta"].keys():
+    for s in ap["shapes_meta"].keys(): #Build metadata about shape
+        if (s == "All"): continue # All key is for statements not about a shape
         meta = ap["shapes_meta"][s]
         yama["description_set"]["entities"].append(s)
         d = dict()
@@ -35,6 +36,7 @@ def build_yama(self):
         yama["descriptions"][meta["ID"]] = d
     yama["statements"] = dict()
     for e in ap["shape_props"].keys():
+        if (e == "All"): continue # All key is for statements not about a shape
         for s in ap["shape_props"][e]:
             yama["descriptions"][e]["statements"].append(s["ID"])
             d = dict()
@@ -65,7 +67,7 @@ def find_type_mapping(namespaces, statements):
             break
     # look for statement constraining rdf:type
     for s in statements:
-        if (s["URI"] == rdfNS + ":type") or (s["URI"] == rdfUri + ":type"):
+        if (s["URI"] == rdfNS + "type") or (s["URI"] == rdfUri + ":type"):
             return s["Value Space"].split(" ")
     # if no rdf:type found call it a rdfs:Resource
     # FIXME: check consequences of this
