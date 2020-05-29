@@ -2,11 +2,11 @@ import csv, pprint
 
 
 class APProcs(dict):
-    """ The a dict of the application profile, each value is a list of dicts, a list for each type containing dicts for each row of that type. Methods to read, display and process that AP.
+    """ A dict of the application profile and methods to read, display and process that AP.
     Keys of top level dict are hard coded:
-        namespaces  - a dict of the namespace
+        namespaces  - a dict of the namespaces
         shapes_meta - a dict of statements about shapes
-        shape_props - a dict of lists of property statements for each shape
+        shape_props - a dict of lists statements about properties for each shape
     values within each dict are themselves dicts of column_heading: cell value pairs from the rows in the csv.
     """
 
@@ -15,6 +15,7 @@ class APProcs(dict):
 
     def __init__(self, infile):
         """set the class properties to their types and optionally, if a csv  file is specified, read the data in"""
+        super().__init__()
         self["namespaces"] = dict()
         self["shapes_meta"] = dict()
         self["shape_props"] = dict()
@@ -24,7 +25,7 @@ class APProcs(dict):
             print("no input file specified")
         return
 
-    def isEmpty(self, dictionary):
+    def isEmptyRow(self, dictionary):
         for key in dictionary:
             if dictionary[key]:
                 return False
@@ -38,7 +39,7 @@ class APProcs(dict):
             c = int(0)
             for row in apreader:
                 c += 1
-                if self.isEmpty(row):
+                if self.isEmptyRow(row):
                     # ignore empty rows; next please
                     continue
                 if row["ID"] and row["ID"][-1] == ":":
