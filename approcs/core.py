@@ -47,7 +47,7 @@ class APProcs(dict):
                     continue
                 if row["ID"] and row["ID"][-1] == ":":
                     # it's a namespace id
-                    self["namespaces"][row["ID"]] = row
+                    self["namespaces"][row["ID"][:-1]] = row
                 elif row["ID"] and row["ID"][0] == "@":
                     # it's a shape id
                     current_shape = row["ID"]
