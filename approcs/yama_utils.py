@@ -67,7 +67,7 @@ def find_type_mapping(namespaces, statements):
             break
     # look for statement constraining rdf:type
     for s in statements:
-        if (s["URI"] == rdfNS + "type") or (s["URI"] == rdfUri + ":type"):
+        if (s["URI"] == rdfNS + "type") or (s["URI"] == rdfUri + "type"):
             return s["Value Space"].split(" ")
     # if no rdf:type found call it a rdfs:Resource
     # FIXME: check consequences of this
