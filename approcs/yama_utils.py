@@ -1,3 +1,6 @@
+from yaml import dump
+
+
 def build_yama(self):
     """build a YAMA representation of the AP"""
     # idea is just to test that internal representation of AP is useful for something, otherwise could just store csv lines as found
@@ -16,7 +19,7 @@ def build_yama(self):
         meta = ap["shapes_meta"][s]
         yama["description_set"]["entities"].append(s)
         d = dict()
-        d["maps_to"] = find_type_mapping(ap["shape_props"][s])
+        d["maps_to"] = find_type_mapping(ap["namespaces"], ap["shape_props"][s])
         if "y" == meta["Mandatory"]:
             d["min"] = 1
         else:
@@ -52,12 +55,21 @@ def build_yama(self):
     return yama
 
 
-def find_type_mapping(s):
-    """given a shape s, as a dict, returns URIs specified as required values for rdf:type property"""
-    return "not yet done"
-
-
-from yaml import dump
+def find_type_mapping(namespaces, statements):
+    """given the statementa about one shape, as a list of dicts, returns URIs specified as required values for rdf:type property"""
+    # find ns for rdf
+    rdfUri = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    for ns in namespaces.keys():
+        if namespaces[ns]["URI"] == rdfUri:
+            rdfNS = ns
+            break
+    # look for statement constraining rdf:type
+    for s in statements:
+        if (s["URI"] == rdfNS + ":type") or (s["URI"] == rdfUri + ":type"):
+            return s["Value Space"].split(" ")
+    # if no rdf:type found call it a rdfs:Resource
+    # FIXME: check consequences of this
+    return "http://www.w3.org/2000/01/rdf-schema#Resource"
 
 
 def dump_yama(self, yama):
