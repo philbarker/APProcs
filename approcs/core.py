@@ -4,10 +4,10 @@ import csv, pprint
 class APProcs(dict):
     """ A dict of the application profile and methods to read, display and process that AP.
     Keys of top level dict are hard coded:
-        namespaces  - a dict of the namespaces
+        namespaces  - a dict of statemants about namespaces
         shapes_meta - a dict of statements about shapes
-        shape_props - a dict of lists statements about properties for each shape
-    values within each dict are themselves dicts of column_heading: cell value pairs from the rows in the csv.
+        shape_props - a dict of lists of statements about properties for each shape
+    statements within each dict are themselves dicts of column_heading: cell value pairs from the rows in the csv.
     """
 
     from .yama_utils import build_yama, dump_yama
@@ -35,13 +35,13 @@ class APProcs(dict):
         """read a csv into list of dicts, one for each row in csv except for first row which is used as keys."""
         with open(infile) as csvfile:
             apreader = csv.DictReader(csvfile)
-            current_shape = "All"
-            self["shapes_meta"]["All"] = dict()
-            self["shape_props"]["All"] = list()
+            current_shape = "None"
+            self["shapes_meta"]["None"] = dict()
+            self["shape_props"]["None"] = list()
             c = int(0)
             for row in apreader:
                 c += 1
-#                print('reading line', c)
+                #                print('reading line', c)
                 if self.isEmptyRow(row):
                     # ignore empty rows; next please
                     continue

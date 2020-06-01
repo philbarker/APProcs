@@ -8,19 +8,32 @@ def build_yama(self):
     yama = dict()
     yama["YAMA"] = "1.0"
     yama["description_set"] = dict()
-    yama["description_set"]["ID"] = "can't generate"
-    yama["description_set"]["title"] = "can't generate"
-    yama["description_set"]["entities"] = list()
+    yama["description_set"]["ID"] = "not known"
+    yama["description_set"]["title"] = "not known"
+    yama["description_set"]["version"] = "not known"
+    yama["description_set"]["date"] = None
+    yama["description_set"]["subject"] = None
+    yama["description_set"]["creator"] = None
+    yama["description_set"]["open"] = None
+    yama["description_set"]["license"] = None
+    yama["description_set"]["descriptions"] = list()
     yama["namespaces"] = dict()
     for ns in ap["namespaces"].keys():
         yama["namespaces"][ns] = ap["namespaces"][ns]["URI"]
     yama["descriptions"] = dict()
-    for s in ap["shapes_meta"].keys(): #Build metadata about shape
-        if (s == "All"): continue # All key is for statements not about a shape
+    for s in ap["shapes_meta"].keys():  # Build metadata about shape
+        if s == "None":
+            continue  # key is for statements not about a shape
         meta = ap["shapes_meta"][s]
-        yama["description_set"]["entities"].append(s)
+        yama["description_set"]["descriptions"].append(s)
         d = dict()
-        d["maps_to"] = find_type_mapping(ap["namespaces"], ap["shape_props"][s])
+        d["label"] = meta["ID"]
+        if meta["Label"]:
+            d["name"] = meta["Label"]
+        else:
+            d["name"] = meta["ID"][1:]
+        if meta["Comment"]:
+            d["description"] = meta["Comment"]
         if "y" == meta["Mandatory"]:
             d["min"] = 1
         else:
@@ -29,32 +42,51 @@ def build_yama(self):
             d["max"] = "unlimited"
         else:
             d["max"] = 1
-        d["standalone"] = str()
+        d["standalone"] = True
         d["statements"] = list()
-        d["label"] = meta["Label"]
-        d["annotation"] = meta["Comment"]
-        yama["descriptions"][meta["ID"]] = d
+        yama["descriptions"][s] = d
     yama["statements"] = dict()
-    for e in ap["shape_props"].keys():
-        if (e == "All"): continue # All key is for statements not about a shape
-        for s in ap["shape_props"][e]:
-            yama["descriptions"][e]["statements"].append(s["ID"])
+    yama["constraints"] = dict()
+    for shape in ap["shape_props"].keys():
+        if shape == "None":
+            continue  # key is for statements not about a shape
+        # otherwise we have a list of statements about properties for a shape
+        for statement in ap["shape_props"][shape]:
+            # add to list of statements for relevant YAMA description
+            yama["descriptions"][shape]["statements"].append(statement["ID"])
+            # build a YAMA entry for the statement
             d = dict()
-            d["property"] = s["URI"]
-            d["type"] = s["Type"]
-            d["value"] = s["Value Space"]
-            if "y" == s["Mandatory"]:
+            d["label"] = statement["URI"]
+            d["property"] = statement["URI"]
+            if statement["Label"]:
+                d["name"] = statement["Label"]
+            else:
+                d["name"] = statement["URI"]
+            if "y" == statement["Mandatory"]:
                 d["min"] = 1
             else:
                 d["min"] = 0
-            if "y" == s["Repeatable"]:
+            if "y" == statement["Repeatable"]:
                 d["max"] = "unlimited"
             else:
                 d["max"] = 1
-            d["label"] = s["Label"]
-            d["annotation"] = s["Comment"]
-            yama["statements"][s["ID"]] = d
+            if statement["Comment"]:
+                d["description"] = statement["Comment"]
+            if statement["Type"] or statement["Value Space"]:
+                cID = "c" + statement["ID"]
+                d["constraints"] = cID
+                yama["constraints"][cID] = build_constraint(
+                    statement["Type"], statement["Value Space"]
+                )
+            yama["statements"][statement["ID"]] = d
     return yama
+
+
+def build_constraint(value_type, value_space):
+    constraint = dict()
+    constraint["type"] = "not done"
+    constraint["notes"] = "somthing to do with %s and %s." % (value_type, value_space)
+    return constraint
 
 
 def find_type_mapping(namespaces, statements):

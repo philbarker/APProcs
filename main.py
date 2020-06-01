@@ -20,7 +20,7 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
     ap = APProcs(args.infile)
-#    ap.dump()
+    ap.dump()
     yama = ap.build_yama()
     ap.dump_yama(yama)
 #    base = ap.make_base_graph()
