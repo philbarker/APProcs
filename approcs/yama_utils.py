@@ -1,10 +1,9 @@
 from yaml import dump
 
 
-def build_yama(self):
+def build_yama(ap):
     """build a YAMA representation of the AP"""
     # idea is just to test that internal representation of AP is useful for something, otherwise could just store csv lines as found
-    ap = self
     yama = dict()
     yama["YAMA"] = "1.0"
     yama["description_set"] = dict()
@@ -106,5 +105,5 @@ def find_type_mapping(namespaces, statements):
     return "http://www.w3.org/2000/01/rdf-schema#Resource"
 
 
-def dump_yama(self, yama):
+def dump_yama(yama):
     print(dump(yama, default_flow_style=False))

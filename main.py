@@ -1,5 +1,7 @@
 from approcs import APProcs
 import argparse
+from approcs.yama_utils import build_yama, dump_yama
+from approcs.rdfs_utils import make_base_graph, make_ap_graph
 
 
 def get_args():
@@ -36,8 +38,8 @@ if __name__ == "__main__":
     if args.dump.lower() in ["true", "t", "1", "y", "yes"]:
         ap.dump()
     if args.yama.lower() in ["true", "t", "1", "y", "yes"]:
-        yama = ap.build_yama()
-        ap.dump_yama(yama)
+        yama = build_yama(ap)
+        dump_yama(yama)
 #    base = ap.make_base_graph()
 #    ap_graph = ap.make_ap_graph(base)
 #    print(ap_graph.serialize(format="turtle").decode("utf-8"))
