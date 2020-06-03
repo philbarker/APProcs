@@ -89,6 +89,7 @@ class ShexAP:
                 deets = ps["Type"] + " in statement " + ps["ID"]
                 print(msg, deets)
         if ps["Value Space"]:
+            #fix me: this is awful.
             value_spaces = ps["Value Space"].split(" ")
             for value_space in value_spaces:
                 if value_space[0] == "@":
