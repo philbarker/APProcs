@@ -10,7 +10,6 @@ class APProcs(dict):
     statements within each dict are themselves dicts of column_heading: cell value pairs from the rows in the csv.
     """
 
-
     def __init__(self, infile):
         """set the class properties to their types and optionally, if a csv  file is specified, read the data in"""
         super().__init__()
