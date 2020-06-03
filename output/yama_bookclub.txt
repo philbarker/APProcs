@@ -1,0 +1,194 @@
+YAMA: '1.0'
+constraints:
+  c10:
+    notes: somthing to do with URI and wd:Q571.
+    type: not done
+  c11:
+    notes: somthing to do with Literal and xsd:string.
+    type: not done
+  c12:
+    notes: somthing to do with URI and @author.
+    type: not done
+  c13:
+    notes: somthing to do with URI and @owner.
+    type: not done
+  c16:
+    notes: somthing to do with URI and sdo:Person sdo:Organization.
+    type: not done
+  c17:
+    notes: somthing to do with Literal and xsd:string.
+    type: not done
+  c18:
+    notes: somthing to do with Literal and xsd:string.
+    type: not done
+  c21:
+    notes: somthing to do with URI and sdo:Person.
+    type: not done
+  c22:
+    notes: somthing to do with URI and foaf:Person.
+    type: not done
+  c23:
+    notes: somthing to do with Literal and xsd:string.
+    type: not done
+  c24:
+    notes: somthing to do with Literal and xsd:string.
+    type: not done
+  c25:
+    notes: somthing to do with URI and @owner.
+    type: not done
+  c9:
+    notes: somthing to do with URI and sdo:Book.
+    type: not done
+description_set:
+  ID: not known
+  creator: null
+  date: null
+  descriptions:
+  - '@book'
+  - '@author'
+  - '@owner'
+  license: null
+  open: null
+  subject: null
+  title: not known
+  version: not known
+descriptions:
+  '@author':
+    label: '@author'
+    max: 1
+    min: 0
+    name: Author
+    standalone: true
+    statements:
+    - '16'
+    - '17'
+    - '18'
+  '@book':
+    description: A book
+    label: '@book'
+    max: unlimited
+    min: 1
+    name: Book
+    standalone: true
+    statements:
+    - '9'
+    - '10'
+    - '11'
+    - '12'
+    - '13'
+  '@owner':
+    label: '@owner'
+    max: 1
+    min: 0
+    name: Owner
+    standalone: true
+    statements:
+    - '21'
+    - '22'
+    - '23'
+    - '24'
+    - '25'
+namespaces:
+  foaf: http://xmlns.com/foaf/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  sdo: http://schema.org/
+  wd: http://www.wikidata.org/entity/
+  wdt: http://www.wikidata.org/prop/direct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+statements:
+  '10':
+    constraints: c10
+    description: must be wikidata Book
+    label: rdf:type
+    max: 1
+    min: 1
+    name: instance of
+    property: rdf:type
+  '11':
+    constraints: c11
+    label: sdo:name
+    max: 1
+    min: 1
+    name: title
+    property: sdo:name
+  '12':
+    constraints: c12
+    label: sdo:author
+    max: unlimited
+    min: 1
+    name: author
+    property: sdo:author
+  '13':
+    constraints: c13
+    description: owned by
+    label: wdt:P127
+    max: unlimited
+    min: 1
+    name: owner
+    property: wdt:P127
+  '16':
+    constraints: c16
+    description: must be person or organization
+    label: rdf:type
+    max: 1
+    min: 1
+    name: instance of
+    property: rdf:type
+  '17':
+    constraints: c17
+    label: sdo:givenName
+    max: 1
+    min: 1
+    name: given name
+    property: sdo:givenName
+  '18':
+    constraints: c18
+    label: sdo:familyName
+    max: 1
+    min: 0
+    name: family name
+    property: sdo:familyName
+  '21':
+    constraints: c21
+    label: rdf:type
+    max: 1
+    min: 1
+    name: instance of
+    property: rdf:type
+  '22':
+    constraints: c22
+    label: rdf:type
+    max: 1
+    min: 1
+    name: instance of
+    property: rdf:type
+  '23':
+    constraints: c23
+    label: sdo:givenName
+    max: 1
+    min: 1
+    name: given name
+    property: sdo:givenName
+  '24':
+    constraints: c24
+    label: sdo:familyName
+    max: 1
+    min: 1
+    name: family name
+    property: sdo:familyName
+  '25':
+    constraints: c25
+    label: foaf:knows
+    max: unlimited
+    min: 0
+    name: friend of
+    property: foaf:knows
+  '9':
+    constraints: c9
+    description: must be schema.org/Book
+    label: rdf:type
+    max: 1
+    min: 1
+    name: instance of
+    property: rdf:type
+
