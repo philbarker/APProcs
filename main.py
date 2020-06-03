@@ -9,6 +9,7 @@ def get_args():
     parser = argparse.ArgumentParser(
         prog="main.py",
         description="Read an application profile from simple csv file and output some RDFS for the profile.",
+        epilog="Please note, this is unfinished and buggy."
     )
     parser.add_argument(
         "infile",
@@ -19,23 +20,26 @@ def get_args():
     parser.add_argument(
         "-d",
         "--dump",
-        type=str,
+        type=bool,
         default="False",
-        help="Dump (print) the AP once loaded",
+        choices=["True","Y","y","yes"],
+        help="Dump (print) the AP once loaded"
     )
     parser.add_argument(
         "-y",
         "--yama",
-        type=str,
+        type=bool,
         default="False",
-        help="Convert and dump (print) the AP as YAMA",
+        choices=["True","Y","y","yes"],
+        help="Convert and dump (print) the AP as YAMA"
     )
     parser.add_argument(
         "-s",
         "--shex",
-        type=str,
+        type=bool,
         default="False",
-        help="Convert and dump (print) the AP as YAMA",
+        choices=["True","Y","y","yes"],
+        help="Convert and dump (print) the AP as shexj"
     )
     return parser.parse_args()
 
