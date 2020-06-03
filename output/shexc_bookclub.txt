@@ -1,0 +1,19 @@
+<http://example.org/shapes#book> {
+(    a IRI [<http://schema.org/Book>]{1,1};
+      a IRI [<http://www.wikidata.org/entity/Q571>]{1,1};
+      <http://schema.org/name> LITERAL <http://www.w3.org/2001/XMLSchema#string>{1,1};
+      <http://schema.org/author> @<http://example.org/shapes#:author>{1,};
+      <http://www.wikidata.org/prop/direct/P127> @<http://example.org/shapes#:owner>{1,})
+}
+<http://example.org/shapes#author> {
+(    a IRI [<http://schema.org/Person> <http://schema.org/Organization>]{1,1};
+      <http://schema.org/givenName> LITERAL <http://www.w3.org/2001/XMLSchema#string>{1,1};
+      <http://schema.org/familyName> LITERAL <http://www.w3.org/2001/XMLSchema#string>?)
+}
+<http://example.org/shapes#owner> {
+(    a IRI [<http://schema.org/Person>]{1,1};
+      a IRI [<http://xmlns.com/foaf/Person>]{1,1};
+      <http://schema.org/givenName> LITERAL <http://www.w3.org/2001/XMLSchema#string>{1,1};
+      <http://schema.org/familyName> LITERAL <http://www.w3.org/2001/XMLSchema#string>{1,1};
+      <http://xmlns.com/foaf/knows> @<http://example.org/shapes#:owner>{0,})
+}
