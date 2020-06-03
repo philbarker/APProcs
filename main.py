@@ -30,6 +30,13 @@ def get_args():
         default="False",
         help="Convert and dump (print) the AP as YAMA",
     )
+    parser.add_argument(
+        "-s",
+        "--shex",
+        type=str,
+        default="False",
+        help="Convert and dump (print) the AP as YAMA",
+    )
     return parser.parse_args()
 
 
@@ -41,8 +48,9 @@ if __name__ == "__main__":
     if args.yama.lower() in ["true", "t", "1", "y", "yes"]:
         yama = build_yama(ap)
         dump_yama(yama)
-    shex = ShexAP(ap)
-    shex.dump_j()
+    if args.shex.lower() in ["true", "t", "1", "y", "yes"]:
+        shex = ShexAP(ap)
+        shex.dump_j()
 #    base = ap.make_base_graph()
 #    ap_graph = ap.make_ap_graph(base)
 #    print(ap_graph.serialize(format="turtle").decode("utf-8"))
