@@ -5,13 +5,13 @@ rdf:,http://www.w3.org/1999/02/22-rdf-syntax-ns#,RDF,,,,,,
 xsd:,http://www.w3.org/2001/XMLSchema#,XML Schema,,,,,,
 ,,,,,,,,
 @Recipe,,Recipe,,,y,n,Application profile for a single recipe,
-,rdf:type,instance of,URI ,sdo:Recipe,y,n,,
+,rdf:type,instance of,URI,sdo:Recipe,y,n,,
 ,sdo:image,image,Entity,xsd:anyURI @Image,y,y,Image of the completed dish.,? how to say Type is URI or Entitiy depending on which Value space is used
 ,sdo:name,name,Literal,xsd:string,y,n,The name of the dish.,
-,sdo:url,page URL,URI ,xsd:anyURI,n,n,The URL of the recipe's web page,not in the Google requirements b/c metadata is assumed to be on-page
+,sdo:url,page URL,URI,xsd:anyURI,n,n,The URL of the recipe's web page,not in the Google requirements b/c metadata is assumed to be on-page
 ,sdo:aggregateRating,,Entity,@AggregateRating,n,n,,
 ,sdo:author,,Entity,@Author,n,y,,
-,sdo:cookTime,,Literal,xsd:duration,n,n,Use ISO 8601 duration format,is there a better RDF construct for ISO 8601 
+,sdo:cookTime,,Literal,xsd:duration,n,n,Use ISO 8601 duration format,is there a better RDF construct for ISO 8601
 ,sdo:datePublished,,Literal,xsd:date,n,n,,
 ,sdo:description,,Literal,xsd:string,n,n,,
 ,sdo:keywords,,Literal,xsd:string,n,y,,
