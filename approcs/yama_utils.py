@@ -4,22 +4,26 @@ from yaml import dump
 def build_yama(ap):
     """build a YAMA representation of the AP"""
     # idea is just to test that internal representation of AP is useful for something, otherwise could just store csv lines as found
-    yama = dict()
-    yama["YAMA"] = "1.0"
-    yama["description_set"] = dict()
-    yama["description_set"]["ID"] = "not known"
-    yama["description_set"]["title"] = "not known"
-    yama["description_set"]["version"] = "not known"
-    yama["description_set"]["date"] = None
-    yama["description_set"]["subject"] = None
-    yama["description_set"]["creator"] = None
-    yama["description_set"]["open"] = None
-    yama["description_set"]["license"] = None
-    yama["description_set"]["descriptions"] = list()
-    yama["namespaces"] = dict()
+    yama = {
+        "YAMA": "1.0",
+        "namespaces": dict(),
+        "description_set": {
+            "ID": "not known",
+            "title": "not known",
+            "version": "not known",
+            "date": None,
+            "subject": None,
+            "creator": None,
+            "open": None,
+            "license": None,
+            "descriptions": list()
+        },
+        "descriptions": dict(),
+        "statements": dict(),
+        "constraints": dict()
+    }
     for ns in ap["namespaces"].keys():
         yama["namespaces"][ns] = ap["namespaces"][ns]["URI"]
-    yama["descriptions"] = dict()
     for s in ap["shapes_meta"].keys():  # Build metadata about shape
         if s == "None":
             continue  # key is for statements not about a shape
@@ -44,8 +48,6 @@ def build_yama(ap):
         d["standalone"] = True
         d["statements"] = list()
         yama["descriptions"][s] = d
-    yama["statements"] = dict()
-    yama["constraints"] = dict()
     for shape in ap["shape_props"].keys():
         if shape == "None":
             continue  # key is for statements not about a shape
