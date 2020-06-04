@@ -16,11 +16,11 @@ def build_yama(ap):
             "creator": None,
             "open": None,
             "license": None,
-            "descriptions": list()
+            "descriptions": list(),
         },
         "descriptions": dict(),
         "statements": dict(),
-        "constraints": dict()
+        "constraints": dict(),
     }
     for ns in ap["namespaces"].keys():
         yama["namespaces"][ns] = ap["namespaces"][ns]["URI"]

@@ -2,6 +2,7 @@ from approcs import APProcs
 import argparse
 from approcs.yama_utils import build_yama, dump_yama
 from approcs.shex_utils import ShexAP
+
 # from approcs.rdfs_utils import make_base_graph, make_ap_graph
 
 
@@ -9,7 +10,7 @@ def get_args():
     parser = argparse.ArgumentParser(
         prog="main.py",
         description="Read an application profile from simple csv file and output some RDFS for the profile.",
-        epilog="Please note, this is unfinished and buggy."
+        epilog="Please note, this is unfinished and buggy.",
     )
     parser.add_argument(
         "infile",
@@ -18,22 +19,19 @@ def get_args():
         help="input file name of Application Profile csv",
     )
     parser.add_argument(
-        "-d",
-        "--dump",
-        action="store_true",
-        help="Dump (print) the AP once loaded"
+        "-d", "--dump", action="store_true", help="Dump (print) the AP once loaded"
     )
     parser.add_argument(
         "-y",
         "--yama",
         action="store_true",
-        help="Convert and dump (print) the AP as YAMA"
+        help="Convert and dump (print) the AP as YAMA",
     )
     parser.add_argument(
         "-s",
         "--shex",
         action="store_true",
-        help="Convert and dump (print) the AP as shexj"
+        help="Convert and dump (print) the AP as shexj",
     )
     return parser.parse_args()
 

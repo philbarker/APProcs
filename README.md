@@ -8,19 +8,19 @@ Example output: [raw](https://github.com/philbarker/APProcs/blob/master/output/r
 
 # Usage
 ```
-main.py [-h] [-d {True,Y,y,yes}] [-y {True,Y,y,yes}] [-s {True,Y,y,yes}] infile
+usage: main.py [-h] [-d] [-y] [-s] infile
 
-Read an application profile from simple csv file and output some RDFS for the profile.
+Read an application profile from simple csv file and output some RDFS for the
+profile.
 
 positional arguments:
-  infile                input file name of Application Profile csv
+  infile      input file name of Application Profile csv
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -d {True,Y,y,yes}, --dump {True,Y,y,yes}
-                        Dump (print) the AP once loaded
-  -y {True,Y,y,yes}, --yama {True,Y,y,yes}
-                        Convert and dump (print) the AP as YAMA
-  -s {True,Y,y,yes}, --shex {True,Y,y,yes}
-                        Convert and dump (print) the AP as shexj
+  -h, --help  show this help message and exit
+  -d, --dump  Dump (print) the AP once loaded
+  -y, --yama  Convert and dump (print) the AP as YAMA
+  -s, --shex  Convert and dump (print) the AP as shexj
+
+Please note, this is unfinished and buggy.
 ```

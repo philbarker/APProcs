@@ -34,14 +34,13 @@ class ShexAP:
             "shapes": list(),
         }
         for shape_id in ap["shapes_meta"].keys():
-            if (shape_id == "None"):
-                continue # global node constraint, not a shape
-                         # to do: add global constraints
+            if shape_id == "None":
+                continue  # global node constraint, not a shape
+                # to do: add global constraints
             shape_meta = ap["shapes_meta"][shape_id]
             shape_uri = self.namespaces["shape_ns"] + shape_meta["ID"][1:]
             prop_statements = ap["shape_props"][shape_id]
             self.add_shape(shape_uri, shape_meta, prop_statements)
-
 
     def add_shape(self, shape_uri, shape_meta, prop_statements):
         shape_d = dict()
@@ -55,22 +54,22 @@ class ShexAP:
         self.shex_j["shapes"].append(shape_d)
         return
 
-    def translate(self,ps):
+    def translate(self, ps):
         """turn a statement about a property from the AP into a dict for a shex triple constraint"""
         constr_d = dict()
         constr_d["type"] = "TripleConstraint"
         constr_d["predicate"] = self.expand_ns(ps["URI"])
         if ps["Mandatory"]:
-        # work out what we can for min triples for this property
-        # AP has no min other than zero or one
-            if ps["Mandatory"].lower() == 'y':
+            # work out what we can for min triples for this property
+            # AP has no min other than zero or one
+            if ps["Mandatory"].lower() == "y":
                 constr_d["min"] = 1
             else:
                 constr_d["min"] = 0
         if ps["Repeatable"]:
-        # work out what we can for max triples for this property
-        # AP has no max other than 1 if not repeatable
-            if ps["Repeatable"].lower() != 'y':
+            # work out what we can for max triples for this property
+            # AP has no max other than 1 if not repeatable
+            if ps["Repeatable"].lower() != "y":
                 constr_d["max"] = 1
         # work out value node constraints for this property
         constr_d["valueExpr"] = dict()
@@ -89,21 +88,21 @@ class ShexAP:
                 deets = ps["Type"] + " in statement " + ps["ID"]
                 print(msg, deets)
         if ps["Value Space"]:
-            #fix me: this is awful.
+            # fix me: this is awful.
             value_spaces = ps["Value Space"].split(" ")
             for value_space in value_spaces:
                 if value_space[0] == "@":
-                    #do something to ref shape
+                    # do something to ref shape
                     key, value = self.process_vs_entity(value_space)
-                elif (value_space.split(":")[0] in self.namespaces.keys()):
+                elif value_space.split(":")[0] in self.namespaces.keys():
                     key, value = self.process_vs_uri(value_space)
-                elif (value_space.split(":")[0].lower() == "http"):
+                elif value_space.split(":")[0].lower() == "http":
                     key, value = self.process_vs_uri(value_space)
                 else:
                     print(value_space, "be not known")
                 if key:
-                    if (type(value) is list):
-                        if (key in constr_d["valueExpr"]) :
+                    if type(value) is list:
+                        if key in constr_d["valueExpr"]:
                             constr_d["valueExpr"][key].extend(value)
                         else:
                             constr_d["valueExpr"][key] = value
@@ -114,16 +113,16 @@ class ShexAP:
         return constr_d
 
     def expand_ns(self, uri):
-        (ns, name) = uri.split(':')
+        (ns, name) = uri.split(":")
         if ns in self.namespaces.keys():
             ns_uri = self.namespaces[ns]
-            return ns_uri+name
+            return ns_uri + name
         else:
             return uri
 
     def process_vs_uri(self, value_space):
         uri = self.expand_ns(value_space)
-        if (uri.split('#')[0] == "http://www.w3.org/2001/XMLSchema"):
+        if uri.split("#")[0] == "http://www.w3.org/2001/XMLSchema":
             key = "datatype"
             value = uri
         else:
@@ -132,11 +131,10 @@ class ShexAP:
         return key, value
 
     def process_vs_entity(self, value_space):
-        name = value_space[1:] #drop the '@'
+        name = value_space[1:]  # drop the '@'
         ns = self.namespaces["shape_ns"]
-        uri = ns+":"+name
+        uri = ns + ":" + name
         return False, uri
-
 
     def dump_j(self):
         print(json.dumps(self.shex_j, indent=4, sort_keys=False))
