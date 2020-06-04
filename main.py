@@ -20,22 +20,19 @@ def get_args():
     parser.add_argument(
         "-d",
         "--dump",
-        type=str,
-        default="False",
+        action="store_true",
         help="Dump (print) the AP once loaded"
     )
     parser.add_argument(
         "-y",
         "--yama",
-        type=str,
-        default="False",
+        action="store_true",
         help="Convert and dump (print) the AP as YAMA"
     )
     parser.add_argument(
         "-s",
         "--shex",
-        type=str,
-        default="False",
+        action="store_true",
         help="Convert and dump (print) the AP as shexj"
     )
     return parser.parse_args()
@@ -44,12 +41,12 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
     ap = APProcs(args.infile)
-    if args.dump.lower() in ["true", "t", "1", "y", "yes"]:
+    if args.dump:
         ap.dump()
-    if args.yama.lower() in ["true", "t", "1", "y", "yes"]:
+    if args.yama:
         yama = build_yama(ap)
         dump_yama(yama)
-    if args.shex.lower() in ["true", "t", "1", "y", "yes"]:
+    if args.shex:
         shex = ShexAP(ap)
         shex.dump_j()
 #    base = ap.make_base_graph()
