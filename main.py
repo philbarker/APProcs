@@ -20,25 +20,22 @@ def get_args():
     parser.add_argument(
         "-d",
         "--dump",
-        type=bool,
+        type=str,
         default="False",
-        choices=["True","Y","y","yes"],
         help="Dump (print) the AP once loaded"
     )
     parser.add_argument(
         "-y",
         "--yama",
-        type=bool,
+        type=str,
         default="False",
-        choices=["True","Y","y","yes"],
         help="Convert and dump (print) the AP as YAMA"
     )
     parser.add_argument(
         "-s",
         "--shex",
-        type=bool,
+        type=str,
         default="False",
-        choices=["True","Y","y","yes"],
         help="Convert and dump (print) the AP as shexj"
     )
     return parser.parse_args()
