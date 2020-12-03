@@ -1,4 +1,4 @@
-ID,URI,Label,Type,Value Space,Mandatory,Repeatable,Comment,
+some ID,some URI,some Label,Type,Value Space,Mandatory,Repeatable,Comment,
 ,,,,,,,based on https://developers.google.com/search/docs/data-types/recipe,It would be useful to have a way of adding comments about the AP as a whole
 sdo:,http://schema.org/,,,,,,,
 rdf:,http://www.w3.org/1999/02/22-rdf-syntax-ns#,RDF,,,,,,
