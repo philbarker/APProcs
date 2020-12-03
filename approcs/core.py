@@ -1,7 +1,7 @@
 import csv, pprint
 
 
-class APProcs(dict):
+class AP(dict):
     """ A dict of the application profile and methods to read, display and process that AP.
     Keys of top level dict are hard coded:
         namespaces  - a dict of statemants about namespaces

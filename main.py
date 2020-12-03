@@ -1,4 +1,4 @@
-from approcs import APProcs
+from approcs import AP
 import argparse
 from approcs.yama_utils import build_yama, dump_yama
 from approcs.shex_utils import ShexAP
@@ -38,7 +38,7 @@ def get_args():
 
 if __name__ == "__main__":
     args = get_args()
-    ap = APProcs(args.infile)
+    ap = AP(args.infile)
     if args.dump:
         ap.dump()
     if args.yama:
