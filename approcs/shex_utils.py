@@ -3,13 +3,13 @@ import json, pprint
 
 class ShexAP:
     """the application profile in ShEx with some utility methods
-       properties:
-       - shex_j : a python dict equivalent of the shex json representation
-       - namespaces : a dict of the namespaces in the AP
-       methods:
-       - create_j() creates the shex_j property
-       - create_namespaces() creates the namespaces property
-       - dump_j() prints the shex json representation of the AP
+    properties:
+    - shex_j : a python dict equivalent of the shex json representation
+    - namespaces : a dict of the namespaces in the AP
+    methods:
+    - create_j() creates the shex_j property
+    - create_namespaces() creates the namespaces property
+    - dump_j() prints the shex json representation of the AP
     """
 
     def __init__(self, ap=None):

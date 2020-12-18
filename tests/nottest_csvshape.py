@@ -30,6 +30,7 @@ default_constraint_dict = {
 
 def test_shape_init():
     sh = CSVShape()
+    print(sh)
     assert sh == default_shape_dict
 
 
